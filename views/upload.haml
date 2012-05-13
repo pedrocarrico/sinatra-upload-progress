@@ -1,0 +1,21 @@
+%head
+  %link{ :rel => "stylesheet", :type => "text/css", :href => "style.css"}
+  
+%body
+  %h1 File upload successfully
+  %table{ :border => "1"}
+    %theader
+      %tr
+        %th Filename
+        %th File size
+        %th Download
+    %tbody
+      - @files.each_with_index do |file, index|
+        %tr
+          %th= File.basename(file.path)
+          %th= "#{to_mb(file.size)} MB"
+          %th
+            %a{:id => "file#{index}", :href => "/uploads/#{File.basename(file.path)}"}
+              = "/uploads/#{File.basename(file.path)}"
+  %a{:id => "back", :href => "/"}
+    = "Back"

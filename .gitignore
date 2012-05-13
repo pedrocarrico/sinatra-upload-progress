@@ -1,0 +1,5 @@
+.rbenv-version
+.rvmrc
+log/sinatra.log
+public/uploads/*
+tmp/restart.txt

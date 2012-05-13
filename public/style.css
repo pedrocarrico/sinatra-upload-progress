@@ -1,0 +1,24 @@
+.bar {
+  width: 300px;
+}
+  
+#progress {
+  background: #eee;
+  border: 1px solid #222;
+  margin-top: 20px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+#progressbar {
+  width: 0px;
+  height: 24px;
+  background: #00fa4b;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+#percents {
+  width: 300px;
+  text-align: center;
+}

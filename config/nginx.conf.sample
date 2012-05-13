@@ -1,0 +1,49 @@
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log debug;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    rewrite_log on;
+    passenger_root <path_to_your_passenger_root_here>; # Use `passenger-config --root`
+    passenger_ruby <path_to_your_ruby_here>;           # Use which ruby or 
+
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    upload_progress proxied 1m;
+    # jquery upload progress needs the responses formatted as JSON
+    # https://github.com/drogus/jquery-upload-progress/wiki
+    upload_progress_json_output;
+
+    sendfile        on;
+
+    keepalive_timeout  65;
+
+    server {
+        listen *:8080;
+        server_name  localhost;
+        root   <your_path_to_the_project_here>/sinatra-upload-progress/public;
+        passenger_enabled on;
+
+        client_max_body_size 500M;
+
+        location /upload {
+            #passenger_enabled functions as a proxy pass and must be declared before the track_uploads directive
+            passenger_enabled on;
+
+            track_uploads proxied 30s;
+         }
+
+        location ~ ^/progress$ {
+            report_uploads proxied;
+        }
+}
